@@ -280,6 +280,14 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    for (var i = 1; i < arguments.length; i++) {
+      for (var key in arguments[i]) {
+        if (!obj.hasOwnProperty(key)) {
+          obj[key] = arguments[i][key];
+        }
+      }
+    }
+    return obj;
   };
 
 
@@ -332,6 +340,10 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var args = Array.from(arguments).slice(2);
+    setTimeout(function() {
+      return func.apply(this, args);  
+    }, wait);
   };
 
 
@@ -346,6 +358,15 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var newArray = array.slice();
+    var i, j, x;
+    for (i = 0; i < newArray.length - 1; i++) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = newArray[i];
+      newArray[i] = newArray[j];
+      newArray[j] = x;
+    }
+    return newArray;
   };
 
 
