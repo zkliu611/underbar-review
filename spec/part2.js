@@ -56,9 +56,9 @@
       });
 
       it('should return false given an array and a value not in that array', function() {
-        // Replace this line with an `expect` statement that tests
-        // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        var array = [1, 2, 3];
+        var value = 4;
+        expect(_.contains(array, value)).to.be.false;
       });
 
       it('should return true given a object and a value from that object', function() {
@@ -89,9 +89,7 @@
       });
 
       it('fails for a collection of all-falsy values', function() {
-        // Replace this line with an `expect` statement that tests
-        // the behavior described by the `it` string
-        throw new Error('This test is missing.');
+        expect(_.every([false, 0, NaN], _.identity)).to.be.false;
       });
 
       it('fails for a collection containing mixed falsy and truthy values', function() {
