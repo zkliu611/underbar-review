@@ -237,14 +237,32 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-    if (accumulator === undefined) {
-      accumulator = collection[0];
-      for (var i = 1; i < collection.length; i++) {
-        accumulator = iterator(accumulator, collection[i], i, collection);
-      } 
-    } else {
-      for (var i = 0; i < collection.length; i++) {
-        accumulator = iterator(accumulator, collection[i], i, collection);
+
+    if (Array.isArray(collection)) {
+      if (accumulator === undefined) {
+        accumulator = collection[0];
+        for (var i = 1; i < collection.length; i++) {
+          accumulator = iterator(accumulator, collection[i], i, collection);
+        } 
+      } else {
+        for (var i = 0; i < collection.length; i++) {
+          accumulator = iterator(accumulator, collection[i], i, collection);
+        }
+      }
+
+    }
+
+    if (typeof collection === 'object') {
+  
+      if (accumulator === undefined) {
+        accumulator = collection[Object.keys(collection)[0]];
+        for (var i = 1; i < Object.keys(collection); i++) {
+          accumulator = iterator(accumulator, collection[Object.keys(collection)[i]], i, collection);
+        } 
+      } else {
+        for (var i = 0; i < Object.keys(collection); i++) {
+          accumulator = iterator(accumulator, collection[Object.keys(collection)[i]], i, collection);
+        }
       }
     }
     // if block to separate arrays and objs - use Obj.keys for reduce
