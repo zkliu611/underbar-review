@@ -249,18 +249,14 @@
           accumulator = iterator(accumulator, collection[i], i, collection);
         }
       }
-
-    }
-
-    if (typeof collection === 'object') {
-  
+    }else {
       if (accumulator === undefined) {
         accumulator = collection[Object.keys(collection)[0]];
-        for (var i = 1; i < Object.keys(collection); i++) {
+        for (var i = 1; i < Object.keys(collection).length; i++) {
           accumulator = iterator(accumulator, collection[Object.keys(collection)[i]], i, collection);
         } 
       } else {
-        for (var i = 0; i < Object.keys(collection); i++) {
+        for (var i = 0; i < Object.keys(collection).length; i++) {
           accumulator = iterator(accumulator, collection[Object.keys(collection)[i]], i, collection);
         }
       }
