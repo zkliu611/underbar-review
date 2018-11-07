@@ -128,7 +128,59 @@
   };
 
   // Produce a duplicate-free version of the array.
+
   _.uniq = function(array, isSorted, iterator) {
+
+    if (array.length === 0) {
+      return [];
+    }
+
+    if (typeof isSorted === 'function') {
+      iterator = isSorted;
+      isSorted = false;
+    }
+
+    var result = [];
+
+    if (iterator === undefined) {
+      if (isSorted === true) {
+        for (var i = 0; i < array.length; i++) {
+          if (array[i] !== array[i - 1]) {
+            result.push(array[i]);
+          }
+        }
+      } else { 
+        for (var i = 0; i < array.length; i++) {
+          if (!result.includes(array[i])) {
+            result.push(array[i]);
+          }
+        }
+      }
+    } 
+
+    if (iterator !== undefined) {
+      var transformedArray = _.map(array, iterator);
+      var transformedResult = [];
+      
+      if (isSorted === true) {
+        for (var i = 0; i < transformedArray.length; i++) {
+          if (transformedArray[i] !== transformedArray[i - 1]) {
+            transformedResult.push(transformedArray[i]);
+            result.push(array[i]);
+          }
+        }
+      } else { 
+        for (var i = 0; i < transformedArray.length; i++) {
+          if (!transformedResult.includes(transformedArray[i])) {
+            transformedResult.push(transformedArray[i]);
+            result.push(array[i]);
+          }
+        }
+      }
+    }
+
+    return result;
+
   };
 
 
@@ -330,7 +382,48 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
+
+
+  /*
+    TRANSFORMATIONS:
+      func(x) = isEven(x)
+       ————————————————————————————————————————————————————————————
+        x      storedvalues    store?   return stored || executed?
+       ————————————————————————————————————————————————————————————
+        2        false          yes      execute.        {2:true}
+        2        true            no      return          {2:true}
+        3        false          yes      execute         {2: true, 3: false}
+      func(x, y, z) ==> use stringify to handle
+    OUTLINE
+      • create empty object, 'ledger'
+      • //key = JSON.stringify(arguments); // because key needs to be a string.
+      • for each input, check if arg has already been called
+        by looking in ledger
+      • if arguments have not been called
+          execute the function and save 'argument:output' in ledger
+      • else
+          set output equal to value for key equal to args
+      • return output
+  */
+
+
+
+
   _.memoize = function(func) {
+
+    // var storage = {};
+
+    // return function () {
+    //   var input = JSON.stringify(arguments);
+
+      
+      
+    // };
+
+    
+
+
+
   };
 
   // Delays a function for the given number of milliseconds, and then calls
