@@ -411,18 +411,19 @@
 
   _.memoize = function(func) {
 
-    // var storage = {};
+    var storage = {};
 
-    // return function () {
-    //   var input = JSON.stringify(arguments);
+    return function () {
 
+      var input = JSON.stringify(arguments);
+      if (storage[input]) {
+        return storage[input];
+      } else {
+        storage[input] = func.apply(this, arguments);
+      }
+      return storage[input];
       
-      
-    // };
-
-    
-
-
+    };
 
   };
 
